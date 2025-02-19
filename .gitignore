@@ -1,0 +1,12 @@
+# Backup files
+*.bak
+*~
+*.swp
+
+# Temp files
+*.tmp
+*.temp
+tmp/
+
+# Mac OS X
+.DS_Store

@@ -1,0 +1,42 @@
+jenkins:
+  systemMessage: "Welcome to Jenkins - Configured via JCasC!"
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin123"
+
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+
+
+unclassified:
+  # Jenkins root URL
+  location:
+    url: "http://localhost:8081/"
+
+jobs:
+  - script: >
+      pipelineJob('JobFeeder') {
+          definition {
+              cpsScm {
+                  scm {
+                      git {
+                          remote {
+                              url 'https://github.com/everops-mat/jenkins-tests.git'
+                          }
+                          branches('main')
+                      }
+                  }
+                  scriptPath 'jobs/feeder.groovy'
+              }
+          }
+      }
+
